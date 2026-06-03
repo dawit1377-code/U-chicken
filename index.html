@@ -3,109 +3,122 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Mama's Kitchen</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@400;600&family=Noto+Sans+Ethiopic:wght@400;700&display=swap" rel="stylesheet">
+    <titleU-Chicken</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght=700&family=Poppins:wght=400;600&family=Noto+Sans+Ethiopic:wght=400;700&display=swap" rel="stylesheet">
     <style>
-        /* ============================================================
-           1. MASTER CONTROL CENTER
-           ============================================================
-        */
         :root {
-            --google-sheet-url: "https://script.google.com/macros/s/AKfycbwRn-MSEXk-ZCUKcE50wj4xUnvH17FtddoBxL8f1YgednJYnzuRPP-LFEfZaRrqATJ3/exec";
+            /* PASTE YOUR LATEST DEPLOYED GOOGLE APPS Script EXECUTION LINK STRING DIRECTLY BELOW */
+            --google-sheet-url: "https://script.google.com/macros/s/AKfycbzn-LocweeJ-muUeM0YSchXexILs-qU3HNalfuNpuNWX7EkH5uU0pnStYM9vBmgAUkE/exec";
             
-            /* Hotel Name Parts */
-            --hotel-en-1: "Mama's";
-            --hotel-en-2: "Kitchen";
+            --welcome-title-color: #0A2A5C;
+            --welcome-subtitle-color: #74271D;
+            --hotel-en-1: "U-Chicken";
+            --hotel-en-2: "";
             --hotel-en-3: ""; 
-            
-            --hotel-am-1: "ማማስ";
-            --hotel-am-2: "ኪችን ";
+            --hotel-am-1: "ዩ-ቺክን";
+            --hotel-am-2: "";
             --hotel-am-3: "";
-
-            /* Color Controls */
-            --word-1-color: #FF0800;
-            --word-2-color: #FF0800;
-            --word-3-color: #FFBA00; 
+            --word-1-color: #0A2A5C;
+            --word-2-color: #0A2A5C;
+            --word-3-color: #0A2A5C; 
             --nav-bg-color: #ffffff;
-            --call-btn-color: #1B263B;
-            
-            --header-bg: #1B263B;
+            --call-btn-color: #FEBE00;
+            --header-bg: #FEBE00;
             --page-bg: #ffffff;
-            --price-color: #3E5F34;
-            --ing-color: #4A0000;
-            --brand-primary: #E56717;
-            --phone-number: "+251966323232";
-            --admin-user: "mamas";
-            --admin-pass: "00000";
+            --price-color: #74271D;
+            --ing-color: #74271D;
+            --brand-primary: #0A2A5C;
+            --phone-number: "+251954954591";
+            --admin-user: "u-chicken";
         }
 
-        /* --- UI CORE --- */
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
         body { background: var(--page-bg); color: #333; font-family: 'Poppins', 'Noto Sans Ethiopic', sans-serif; padding-bottom: 100px; }
         
-        #pageLoader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white; z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        #pageLoader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #ffffff; z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; text-align: center; transition: opacity 0.4s ease; }
+        .loader-welcome-title { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; color: var(--welcome-title-color); margin-bottom: 4px; }
+        .loader-welcome-subtitle { font-family: 'Noto Sans Ethiopic', sans-serif; font-size: 18px; font-weight: 700; color: var(--welcome-subtitle-color); margin-bottom: 30px; }
         .spinner { width: 45px; height: 45px; border: 5px solid #eee; border-top: 5px solid var(--brand-primary); border-radius: 50%; animation: spin 1s linear infinite; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .progress-text { font-size: 24px; font-weight: 700; color: var(--brand-primary); margin-top: 15px; font-family: 'Poppins', sans-serif; }
 
-        .header { background: var(--header-bg); padding: 10px; display: flex; align-items: center; position: sticky; top: 0; z-index: 1000; height: 130px; }
-        .logo-img { height: 80px; width: 80px; object-fit: contain; margin-right: 10px; flex-shrink: 0; }
-        .header-center-area { text-align: center; flex-grow: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; overflow: hidden; }
-        .header h1 { font-family: 'Playfair Display'; font-size: 22px; font-weight: 800; }
+        /* Correction 1: Shifted to relative positioning with absolute menu alignment to perfectly center the logo & texts to the absolute center screen line */
+        .header { background: var(--header-bg); padding: 15px; display: flex; align-items: center; justify-content: center; position: sticky; top: 0; z-index: 1000; min-height: 125px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); width: 100%; }
+        .header-left-menu { cursor: pointer; font-size: 28px; color: white; position: absolute; left: 15px; width: 40px; text-align: center; z-index: 1010; }
+        
+        /* Layout Fix: Keeps logo and text separated neatly from the absolute positioned side button */
+        .header-center-wrapper { display: flex; align-items: center; justify-content: center; max-width: 85%; margin-left: auto; margin-right: auto; }
+        .logo-container-block { display: flex; align-items: center; justify-content: center; width: 75px; height: 75px; background: rgba(255,255,255,0.05); border-radius: 50%; padding: 3px; margin-right: 12px; flex-shrink: 0; }
+        .logo-img { height: 100%; width: 100%; object-fit: cover; border-radius: 50%; }
+        .header-center-area { display: flex; flex-direction: column; justify-content: center; align-items: flex-start; text-align: left; overflow: hidden; }
+        
+        /* Linked to variable colors inside JS template parsing engine */
+        .header h1 { font-family: 'Playfair Display', serif; font-size: 21px; font-weight: 800; line-height: 1.2; word-break: break-word; }
         .w1 { color: var(--word-1-color); }
         .w2 { color: var(--word-2-color); }
         .w3 { color: var(--word-3-color); }
+        .hotel-subtitle-amh { display: block; font-size: 17px; font-weight: 700; margin-top: 4px; font-family: 'Noto Sans Ethiopic', sans-serif; }
         
-        .nav-bar { display: flex; overflow-x: auto; padding: 15px 10px; background: var(--nav-bg-color); position: sticky; top: 130px; z-index: 900; border-bottom: 1px solid #eee; min-height: 195px; scrollbar-width: none; }
-        .nav-item { text-align: center; min-width: 150px; opacity: 0.5; cursor: pointer; flex-shrink: 0; border-bottom: 4px solid transparent; }
+        .nav-bar { display: flex; overflow-x: auto; padding: 15px 10px; background: var(--nav-bg-color); position: sticky; top: 125px; z-index: 900; border-bottom: 1px solid #eee; min-height: 185px; scrollbar-width: none; gap: 15px; }
+        .nav-bar::-webkit-scrollbar { display: none; }
+        .nav-item { text-align: center; min-width: 145px; opacity: 0.5; cursor: pointer; flex-shrink: 0; border-bottom: 4px solid transparent; padding-bottom: 8px; transition: all 0.2s ease; }
         .nav-item.active { opacity: 1; font-weight: bold; color: var(--brand-primary); border-bottom-color: var(--brand-primary); }
-        .nav-item img { width: 125px; height: 125px; border-radius: 50%; object-fit: cover; border: 3px solid #eee; margin-bottom: 8px; }
+        .nav-item img { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 3px solid #eee; margin-bottom: 8px; display: block; margin-left: auto; margin-right: auto; }
+        
+        /* Correction 3: Increased font size and locked both languages to bold inside categories */
+        .nav-item p { font-size: 16px; line-height: 1.3; font-weight: 700; color: #111111; }
+        .nav-cat-amh { display: block; font-size: 14px; font-weight: 700; opacity: 0.95; margin-top: 2px; font-family: 'Noto Sans Ethiopic', sans-serif; }
 
-        .container { padding: 15px; }
-        .card { display: flex; align-items: flex-start; background: white; border-radius: 12px; margin-bottom: 15px; padding: 12px; border: 1px solid #f0f0f0; box-shadow: 0 2px 8px rgba(0,0,0,0.05); overflow: hidden; } 
+        .container { padding: 15px; width: 100%; max-width: 100%; display: block; box-sizing: border-box; }
+        .card { display: flex; align-items: flex-start; background: #ffffff; border-radius: 12px; margin-bottom: 15px; padding: 12px; border: 1px solid #f0f0f0; box-shadow: 0 2px 8px rgba(0,0,0,0.05); overflow: hidden; cursor: pointer; width: 100%; box-sizing: border-box; } 
         .food-img { width: 110px; height: 110px; border-radius: 10px; object-fit: cover; margin-right: 15px; flex-shrink: 0; }
+        .food-info-area { flex-grow: 1; min-width: 0; display: flex; flex-direction: column; justify-content: center; }
+        .food-title { color: var(--brand-primary); font-size: 18px; font-weight: 700; line-height: 1.3; margin-bottom: 4px; word-wrap: break-word; }
+        .food-title-amh { display: block; font-size: 17px; font-weight: 700; margin-top: 2px; font-family: 'Noto Sans Ethiopic', sans-serif; }
         
-        .food-info-area { flex-grow: 1; min-width: 0; }
-        .food-title { color: var(--brand-primary); font-size: 19px; font-weight: 600; line-height: 1.2; margin-bottom: 4px; }
-        .food-ing { font-size: 13px; color: var(--ing-color); font-style: italic; line-height: 1.3; word-wrap: break-word; overflow-wrap: break-word; }
-        
-        .price-tag { font-weight: bold; color: var(--price-color); margin-top: 8px; font-size: 17px; }
+        .food-ing { font-size: 13px; color: var(--ing-color); font-style: italic; line-height: 1.3; word-wrap: break-word; margin-bottom: 6px; }
+        .price-tag { font-weight: bold; color: var(--price-color); font-size: 17px; }
 
-        .overlay { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.92); z-index:4000; align-items:center; justify-content:center; }
-        .modal { background:white; padding:25px; border-radius:15px; width:92%; max-width:750px; position: relative; }
-        #modalImgHD { width: 100%; max-height: 65vh; object-fit: contain; border-radius: 10px; margin-bottom: 15px; display: block; image-rendering: -webkit-optimize-contrast; }
-        .close-x { position: absolute; top: 10px; right: 20px; font-size: 35px; cursor: pointer; color: #000; }
+        .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 4000; align-items: center; justify-content: center; padding: 15px; }
+        .modal { background: #ffffff; padding: 25px; border-radius: 15px; width: 100%; max-width: 500px; position: relative; box-sizing: border-box; max-height: 90vh; overflow-y: auto; }
+        #modalImgHD { width: 100%; max-height: 45vh; object-fit: contain; border-radius: 10px; margin-bottom: 15px; display: block; }
+        .close-x { position: absolute; top: 10px; right: 20px; font-size: 35px; cursor: pointer; color: #000000; z-index: 10; }
 
-        .call-order-btn { position: fixed; bottom: 15px; left: 50%; transform: translateX(-50%); background: var(--call-btn-color); color: white; padding: 16px 35px; border-radius: 50px; text-decoration: none; z-index: 2000; font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
+        .call-order-btn { position: fixed; bottom: 15px; left: 50%; transform: translateX(-50%); background: var(--call-btn-color); color: #ffffff; padding: 16px 35px; border-radius: 50px; text-decoration: none; z-index: 2000; font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.3); white-space: nowrap; }
 
-        #adminDashboard { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:#fff; z-index:3000; padding:15px; overflow-y: auto; }
+        #adminDashboard { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #ffffff; z-index: 3000; padding: 15px; overflow-y: auto; box-sizing: border-box; }
         .admin-section { border: 1px solid #ddd; padding: 15px; border-radius: 10px; margin-bottom: 25px; background: #fafafa; }
-        .btn { padding: 12px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; color: white; text-align: center; }
-        .cat-row { background: white; padding: 15px; border: 1px solid #eee; margin-bottom: 10px; border-radius: 8px; }
+        .btn { display: block; width: 100%; padding: 12px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; color: #ffffff; text-align: center; font-size: 14px; margin-top: 10px; }
+        .cat-row { background: #ffffff; padding: 15px; border: 1px solid #eee; margin-bottom: 10px; border-radius: 8px; }
         .cat-info { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
-        table { width: 100%; border-collapse: collapse; }
-        td { padding: 12px 5px; border-bottom: 1px solid #eee; }
-        .price-box { width: 100px !important; font-weight: bold; text-align: center; border: 2px solid var(--brand-primary) !important; }
-        input, select { width: 100%; padding: 12px; margin: 4px 0; border: 1px solid #ccc; border-radius: 8px; font-size: 14px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        td { padding: 12px 5px; border-bottom: 1px solid #eee; vertical-align: top; }
+        .price-box { width: 90px !important; font-weight: bold; text-align: center; border: 2px solid var(--brand-primary) !important; }
+        input, select { width: 100%; padding: 12px; margin: 6px 0; border: 1px solid #ccc; border-radius: 8px; font-size: 14px; background: #fff; display: block; box-sizing: border-box; }
     </style>
 </head>
 <body onclick="APP.closeOnOutside(event)">
 
 <div id="pageLoader">
+    <h2 class="loader-welcome-title">Welcome To Blue U-Chicken</h2>
+    <h3 class="loader-welcome-subtitle">እንኳን ወደ ዩ-ቺክን በደህና መጡ</h3>
     <div class="spinner"></div>
-    <p id="loadText" style="margin-top:10px; font-size:12px; font-weight:600; color:var(--header-bg)">Connecting... 0%</p>
+    <div id="progressText" class="progress-text">1%</div>
 </div>
 
 <header class="header">
-    <div onclick="APP.showLogin(event)" style="cursor:pointer; font-size:28px; padding:10px; color:white;">☰</div>
-    <div id="logoContainer" style="display: flex; align-items: center; justify-content: center;">
-        <img src="logo.jpg" class="logo-img" alt="Logo" onerror="this.style.display='none'; document.getElementById('logoFallback').style.display='flex'">
-        <div id="logoFallback" style="display:none; height:70px; width:70px; background: rgba(255,255,255,0.1); border-radius: 50%; align-items: center; justify-content: center; font-size: 30px; margin-right: 10px; border: 2px dashed rgba(255,255,255,0.3);">🍔</div>
+    <div class="header-left-menu" onclick="APP.showLogin(event)">☰</div>
+    
+    <div class="header-center-wrapper">
+        <div id="logoContainer" class="logo-container-block">
+            <img src="logo.jpg" class="logo-img" alt="Logo" onerror="this.style.display='none'; document.getElementById('logoFallback').style.display='flex'">
+            <div id="logoFallback" style="display:none; height:60px; width:60px; background: rgba(255,255,255,0.1); border-radius: 50%; align-items: center; justify-content: center; font-size: 24px;">☕</div>
+        </div>
+        <div class="header-center-area">
+            <h1 id="mainTitle"><span id="w1"></span> <span id="w2"></span> <span id="w3"></span></h1>
+            <div id="subTitle" style="font-size:11px; font-weight:bold; letter-spacing:2px; color:rgba(255,255,255,0.8); margin-top: 2px;">MENU / የምግብ ዝርዝር</div>
+        </div>
     </div>
-    <div class="header-center-area">
-        <h1 id="mainTitle"><span class="w1" id="w1"></span> <span class="w2" id="w2"></span> <span class="w3" id="w3"></span></h1>
-        <div id="subTitle" style="font-size:12px; font-weight:bold; letter-spacing:3px; color:white;">MENU</div>
-    </div>
-    <button onclick="APP.toggleLang()" style="background:white; color:var(--header-bg); border:none; padding:10px 15px; border-radius:20px; font-weight:bold;">EN/አማ</button>
 </header>
 
 <nav class="nav-bar" id="categoryNav"></nav>
@@ -115,136 +128,223 @@
     <div class="modal" onclick="event.stopPropagation()">
         <span class="close-x" onclick="APP.closeDetail()">&times;</span>
         <img id="modalImgHD" src="">
-        <h2 id="modalTitle" style="color:var(--brand-primary);"></h2>
-        <p id="modalIng" style="color:var(--ing-color); font-style:italic; margin: 10px 0;"></p>
-        <div id="modalPrice" style="color:var(--price-color); font-size:24px; font-weight:bold; border-top:1px solid #eee; padding-top:10px;"></div>
+        <h2 id="modalTitle" style="line-height:1.4;"></h2>
+        <p id="modalIng" style="font-style:italic; margin: 10px 0;"></p>
+        <div id="modalPrice" style="font-size:24px; font-weight:bold; border-top:1px solid #eee; padding-top:10px;"></div>
     </div>
 </div>
 
-<a href="#" id="callLink" class="call-order-btn">📞 <span id="callBtnText"></span></a>
+<a href="#" id="callLink" class="call-order-btn">📞 Call To Order (ለማዘዝ ይደውሉ)</a>
 
 <div id="adminDashboard">
     <div style="display:flex; justify-content:space-between; align-items:center; background:var(--header-bg); padding:20px; color:white; border-radius:12px; margin-bottom: 20px;">
-        <h3>DIBORA MANAGER</h3>
-        <button onclick="APP.closeAdmin()" style="color:white; border:none; background:none; font-size:40px;">&times;</button>
+        <h3 style="margin:0;" id="admDashTitle">HIMMA COFFEE MANAGER</h3>
+        <button onclick="APP.closeAdmin()" style="color:white; border:none; background:none; font-size:40px; cursor:pointer; line-height:1;">&times;</button>
     </div>
     <div class="admin-section">
-        <h4>1. Category Management</h4>
+        <h4 id="lblCatMgmt">1. Category Management</h4>
         <div id="adminCatList"></div>
-        <button class="btn" style="background:#8e44ad; width:100%; margin-top:15px;" onclick="APP.openModal('catModal')">+ ADD NEW CATEGORY</button>
+        <button class="btn" style="background:#8e44ad;" id="btnAddCat" onclick="APP.openModal('catModal')">+ ADD NEW CATEGORY</button>
     </div>
     <div class="admin-section">
-        <h4>2. Menu Items Management</h4>
-        <button class="btn" style="background:#27ae60; width:100%; margin-bottom:20px;" onclick="APP.openModal('itemModal')">+ ADD NEW FOOD ITEM</button>
-        <div style="overflow-x:auto;">
+        <h4 id="lblItemMgmt">2. Menu Items Management</h4>
+        <button class="btn" style="background:#27ae60; margin-bottom:20px;" id="btnAddItem" onclick="APP.openModal('itemModal')">+ ADD NEW FOOD ITEM</button>
+        <div style="overflow-x:auto; width:100%;">
             <table><tbody id="adminItemBody"></tbody></table>
         </div>
     </div>
-    <button id="cloudBtn" onclick="APP.saveToCloud()" style="width:100%; padding:22px; background:#27ae60; color:white; border:none; border-radius:12px; font-weight:bold;">💾 SYNC ALL CHANGES</button>
+    <div class="admin-section">
+        <h4 id="lblSecMgmt">3. Admin Security</h4>
+        <input type="text" id="newPassInput" placeholder="Enter New Password">
+        <button id="passUpdateBtn" class="btn" style="background:#3498db;" onclick="APP.updateSystemPassword()">🔒 UPDATE PASSWORD</button>
+    </div>
+    <button id="cloudBtn" onclick="APP.saveToCloud()" style="width:100%; padding:22px; background:#27ae60; color:white; border:none; border-radius:12px; font-weight:bold; font-size:16px; cursor:pointer; margin-top:20px; box-shadow: 0 4px 10px rgba(0,0,0,0.15);">💾 SYNC ALL CHANGES</button>
 </div>
 
 <div id="loginOverlay" class="overlay">
     <div class="modal" onclick="event.stopPropagation()" style="text-align:center;">
-        <h2 id="loginWelcomeText" style="margin-bottom:15px; color:var(--header-bg);"></h2>
-        <input type="text" id="uIn" placeholder="User" autocomplete="off">
-        <input type="password" id="pIn" placeholder="Pass" autocomplete="off">
-        <button onclick="APP.verifyLogin()" class="btn" style="background:var(--header-bg); width:100%; margin-top:15px;">LOGIN</button>
+        <span class="close-x" onclick="APP.closeModals()">&times;</span>
+        <h2 style="margin-bottom:20px; color:var(--header-bg); font-size:20px; line-height:1.4;" id="loginModalTitle"></h2>
+        <input type="text" id="uIn" placeholder="Username" autocomplete="off">
+        <input type="password" id="pIn" placeholder="Password" autocomplete="off">
+        <button id="btnLoginSubmit" onclick="APP.verifyLogin()" class="btn" style="background:var(--header-bg); margin-top:15px;">LOGIN</button>
     </div>
 </div>
 
-<div id="editCatModal" class="overlay"><div class="modal" onclick="event.stopPropagation()"><h3>Rename Category</h3><input type="text" id="eCatEn"><input type="text" id="eCatAm"><button onclick="APP.applyCatRename()" class="btn" style="background:#27ae60; width:100%;">SAVE RENAME</button></div></div>
-<div id="catModal" class="overlay"><div class="modal" onclick="event.stopPropagation()"><h3>New Category</h3><input type="text" id="nCatId" placeholder="ID"><input type="text" id="nCatEn"><input type="text" id="nCatAm"><input type="file" onchange="APP.handleImg(this)"><button onclick="APP.createNewCat()" class="btn" style="background:#8e44ad; width:100%;">CREATE</button></div></div>
-<div id="itemModal" class="overlay"><div class="modal" onclick="event.stopPropagation()"><h3>Add New Item</h3><select id="nItemCat"></select><input type="text" id="nItemEn" placeholder="EN"><input type="text" id="nItemAm" placeholder="AM"><input type="text" id="nItemIng" placeholder="Ingredients"><input type="text" id="nItemPrice" placeholder="Price"><input type="file" onchange="APP.handleImg(this)"><button onclick="APP.createNewItem()" class="btn" style="background:#27ae60; width:100%;">ADD TO MENU</button></div></div>
+<div id="editCatModal" class="overlay"><div class="modal" onclick="event.stopPropagation()"><span class="close-x" onclick="APP.closeModals()">&times;</span><h3 id="lblRenameCat">Rename Category</h3><input type="text" id="eCatEn"><input type="text" id="eCatAm"><button onclick="APP.applyCatRename()" class="btn" style="background:#27ae60;" id="btnSaveRename">SAVE RENAME</button></div></div>
+<div id="catModal" class="overlay"><div class="modal" onclick="event.stopPropagation()"><span class="close-x" onclick="APP.closeModals()">&times;</span><h3 id="lblNewCatTitle">New Category</h3><input type="text" id="nCatId" placeholder="Category Unique ID (e.g., 5)"><input type="text" id="nCatEn" placeholder="English Title"><input type="text" id="nCatAm" placeholder="Amharic Title"><label style="font-size:12px; margin-top:5px; display:block; color:#666;" id="lblCatImgFile">Category Icon Image File:</label><input type="file" accept="image/*" onchange="APP.handleImg(this)"><button onclick="APP.createNewCat()" class="btn" style="background:#8e44ad;" id="btnCreateCat">CREATE CATEGORY</button></div></div>
+<div id="itemModal" class="overlay"><div class="modal" onclick="event.stopPropagation()"><span class="close-x" onclick="APP.closeModals()">&times;</span><h3 id="lblAddItemTitle">Add New Item</h3><select id="nItemCat"></select><input type="text" id="nItemEn" placeholder="Food English Title"><input type="text" id="nItemAm" placeholder="Food Amharic Title"><input type="text" id="nItemIng" placeholder="Ingredients/Description"><input type="text" id="nItemPrice" placeholder="Price Amount Only (e.g. 250)"><label style="font-size:12px; margin-top:5px; display:block; color:#666;" id="lblItemImgFile">Food Display Image File:</label><input type="file" accept="image/*" onchange="APP.handleImg(this)"><button onclick="APP.createNewItem()" class="btn" style="background:#27ae60;" id="btnCreateItem">ADD TO MENU LIST</button></div></div>
+
+<form id="corsBypassForm" method="POST" target="bypassFrame" style="display:none;">
+    <input type="hidden" name="jsonData" id="corsPayloadField">
+</form>
+<iframe name="bypassFrame" style="display:none;" id="bypassFrame"></iframe>
 
 <script>
-    const APP = {
-        data: [], cats: [], lang: 'en', activeCat: '', imgTmp: '', editId: null,
+    window.handleGoogleJSONP = function(response) {
+        if (response && response.status !== "error") {
+            APP.processIncomingData(response);
+        } else {
+            console.error("Sheet Response Interrupted");
+            alert("Sync connection error from Google server. Retrying...");
+        }
+    };
 
-        init: async function() {
-            const loadTxt = document.getElementById('loadText');
-            loadTxt.innerText = "Connecting... 15%";
-            
+    const APP = {
+        data: [], cats: [], lang: 'en', activeCat: '', imgTmp: '', editId: null, cloudPassword: "himma",
+        isDataReady: false, currentPercent: 1,
+
+        init: function() {
             const root = getComputedStyle(document.documentElement);
-            const sheetUrl = root.getPropertyValue('--google-sheet-url').trim().replace(/"/g, '');
             document.getElementById('callLink').href = "tel:" + root.getPropertyValue('--phone-number').trim().replace(/"/g, '');
             
-            try {
-                loadTxt.innerText = "Connecting... 40%";
-                // High Speed Fix: Removed ?t= timestamp to allow browser caching
-                const r = await fetch(sheetUrl); 
-                
-                loadTxt.innerText = "Connecting... 75%";
-                const j = await r.json();
-                
-                loadTxt.innerText = "Connecting... 95%";
-                this.data = j.items || [];
-                this.cats = j.cats || [];
-                if(this.cats.length > 0) this.activeCat = this.cats[0].id;
-                
-                this.hideLoader();
-            } catch(e) { 
-                console.error(e);
-                this.hideLoader(); 
+            let baseUrl = root.getPropertyValue('--google-sheet-url').trim().replace(/"/g, '');
+            if (!baseUrl || baseUrl.includes("YOUR_EXEC_URL_HERE")) {
+                return;
             }
+            
+            this.isDataReady = false;
+            this.currentPercent = 1;
+            this.startSmoothCountdown();
+
+            const scriptTag = document.createElement('script');
+            scriptTag.src = baseUrl + (baseUrl.indexOf('?') >= 0 ? '&' : '?') + "callback=handleGoogleJSONP&_cache=" + new Date().getTime();
+            document.body.appendChild(scriptTag);
+        },
+
+        startSmoothCountdown: function() {
+            const txt = document.getElementById('progressText');
+            const interval = setInterval(() => {
+                if (!this.isDataReady && this.currentPercent >= 85) {
+                    if (this.currentPercent < 95) {
+                        this.currentPercent += 1;
+                        if(txt) txt.innerText = this.currentPercent + "%";
+                    }
+                } else {
+                    this.currentPercent += 1;
+                    if(txt) txt.innerText = this.currentPercent + "%";
+                    
+                    if (this.currentPercent >= 100) {
+                        clearInterval(interval);
+                        this.hideLoader();
+                    }
+                }
+            }, 15);
+        },
+
+        processIncomingData: function(j) {
+            this.data = j.items || [];
+            this.cats = j.cats || [];
+            if (j.password) this.cloudPassword = String(j.password).trim();
+            
+            if (this.cats.length > 0 && !this.activeCat) {
+                this.activeCat = String(this.cats[0].id).trim();
+            }
+            this.isDataReady = true;
         },
 
         hideLoader: function() { 
             const loader = document.getElementById('pageLoader');
-            if(loader) loader.style.display = 'none'; 
+            if(loader) {
+                loader.style.opacity = '0';
+                setTimeout(() => { loader.style.display = 'none'; }, 400);
+            }
             this.render(); 
         },
 
         render: function() {
-            const isEn = this.lang === 'en';
             const root = getComputedStyle(document.documentElement);
             
-            const hEn = [
-                root.getPropertyValue('--hotel-en-1').trim().replace(/"/g, ''),
-                root.getPropertyValue('--hotel-en-2').trim().replace(/"/g, ''),
-                root.getPropertyValue('--hotel-en-3').trim().replace(/"/g, '')
-            ].filter(Boolean).join(' ');
+            // Correction 2: Pulling hex values directly from the configuration file so edits reflect immediately
+            const colorW1 = root.getPropertyValue('--word-1-color').trim();
+            const colorW2 = root.getPropertyValue('--word-2-color').trim();
+            const colorW3 = root.getPropertyValue('--word-3-color').trim();
+            const colorPrice = root.getPropertyValue('--price-color').trim();
+            const colorIng = root.getPropertyValue('--ing-color').trim();
+            const colorPrimary = root.getPropertyValue('--brand-primary').trim();
 
-            const hAm = [
-                root.getPropertyValue('--hotel-am-1').trim().replace(/"/g, ''),
-                root.getPropertyValue('--hotel-am-2').trim().replace(/"/g, ''),
-                root.getPropertyValue('--hotel-am-3').trim().replace(/"/g, '')
-            ].filter(Boolean).join(' ');
-
-            document.getElementById('w1').innerText = isEn ? root.getPropertyValue('--hotel-en-1').trim().replace(/"/g, '') : root.getPropertyValue('--hotel-am-1').trim().replace(/"/g, '');
-            document.getElementById('w2').innerText = isEn ? root.getPropertyValue('--hotel-en-2').trim().replace(/"/g, '') : root.getPropertyValue('--hotel-am-2').trim().replace(/"/g, '');
-            document.getElementById('w3').innerText = isEn ? root.getPropertyValue('--hotel-en-3').trim().replace(/"/g, '') : root.getPropertyValue('--hotel-am-3').trim().replace(/"/g, '');
+            const engTitle = root.getPropertyValue('--hotel-en-1').trim().replace(/"/g, '') + " " + root.getPropertyValue('--hotel-en-2').trim().replace(/"/g, '');
+            const amhTitle = root.getPropertyValue('--hotel-am-1').trim().replace(/"/g, '') + " " + root.getPropertyValue('--hotel-am-2').trim().replace(/"/g, '');
             
-            document.getElementById('callBtnText').innerText = isEn ? "Call To Order" : "ለማዘዝ ይደውሉ";
-            document.getElementById('loginWelcomeText').innerText = isEn ? `Welcome to "${hEn}"` : `እንኳን ወደ "${hAm}" በደህና መጡ`;
+            // Correction 1 & 2: Center-aligned stacking using active color styling strings
+            const elW1 = document.getElementById('w1');
+            elW1.innerText = engTitle;
+            elW1.style.color = colorW1;
 
+            const elW2 = document.getElementById('w2');
+            elW2.innerHTML = `<span class="hotel-subtitle-amh" style="color: ${colorW2};">${amhTitle}</span>`;
+            
+            document.getElementById('w3').innerText = "";
+
+            // Correction 3: Admin Box Layout matching precisely
+            document.getElementById('loginModalTitle').innerHTML = `Welcome to "${engTitle}" Admin Page<br><span style="display:block; font-size:16px; font-weight:bold; color:#666; margin-top:6px; font-family:'Noto Sans Ethiopic';">እንኳን ወደ "${amhTitle}" አስተዳዳሪ ገጽ በደህና መጡ</span>`;
+            
+            document.getElementById('uIn').placeholder = "Username (የተጠቃሚ ስም)";
+            document.getElementById('pIn').placeholder = "Password (የይለፍ ቃል)";
+            document.getElementById('btnLoginSubmit').innerText = "LOGIN (ግባ)";
+            
+            document.getElementById('admDashTitle').innerText = engTitle + " MANAGER (" + amhTitle + " አስተዳዳሪ)";
+            document.getElementById('lblCatMgmt').innerText = "1. Category Management (የምድብ አስተዳደር)";
+            document.getElementById('btnAddCat').innerText = "+ ADD NEW CATEGORY (አዲስ ምድብ ጨምር)";
+            document.getElementById('lblItemMgmt').innerText = "2. Menu Items Management (የምግብ ዝርዝር አስተዳደር)";
+            document.getElementById('btnAddItem').innerText = "+ ADD NEW FOOD ITEM (አዲስ ምግብ ጨምር)";
+            document.getElementById('lblSecMgmt').innerText = "3. Admin Security (የአስተዳዳሪ ደህንነት)";
+            document.getElementById('newPassInput').placeholder = "Enter New Password (አዲስ የይለፍ ቃል ያስገቡ)";
+            document.getElementById('passUpdateBtn').innerText = "🔒 UPDATE PASSWORD (የይለፍ ቃል ቀይር)";
+            document.getElementById('cloudBtn').innerText = "💾 SYNC ALL CHANGES (ለውጦችን አመሳስል)";
+
+            document.getElementById('lblRenameCat').innerText = "Rename Category (ምድብ ስም ቀይር)";
+            document.getElementById('btnSaveRename').innerText = "SAVE RENAME (ለውጡን አስቀምጥ)";
+            document.getElementById('lblNewCatTitle').innerText = "New Category (አዲስ ምድብ)";
+            document.getElementById('lblCatImgFile').innerText = "Category Icon Image File (የምድብ ምስል ፋይል):";
+            document.getElementById('btnCreateCat').innerText = "CREATE CATEGORY (ምድብ ፍጠር)";
+            document.getElementById('lblAddItemTitle').innerText = "Add New Item (አዲስ ምግብ ማውጫ)";
+            document.getElementById('lblItemImgFile').innerText = "Food Display Image File (የምግቡ ምስል ፋይል):";
+            document.getElementById('btnCreateItem').innerText = "ADD TO MENU LIST (ወደ ምግብ ዝርዝር ጨምር)";
+
+            // Correction 3: Categories updated to make both titles bold and scaled up cleanly
             document.getElementById('categoryNav').innerHTML = this.cats.map(c => `
-                <div class="nav-item ${this.activeCat == c.id ? 'active' : ''}" onclick="APP.setCat('${c.id}')">
+                <div class="nav-item ${String(this.activeCat).trim() === String(c.id).trim() ? 'active' : ''}" onclick="APP.setCat('${String(c.id).trim()}')">
                     <img src="${c.img || ''}" onerror="this.src='https://via.placeholder.com/150'">
-                    <p>${isEn ? c.en : c.am}</p>
+                    <p>${c.en} <span class="nav-cat-amh">(${c.am})</span></p>
                 </div>`).join('');
 
-            const filtered = this.data.filter(i => String(i.cat) === String(this.activeCat) && !i.hidden);
-            document.getElementById('menuListing').innerHTML = filtered.map(i => {
-                const globalIdx = this.data.indexOf(i);
-                return `
-                <div class="card" onclick="APP.openDetail(${globalIdx})">
-                    <img src="${i.img || ''}" class="food-img" onerror="this.src='https://via.placeholder.com/150'">
-                    <div class="food-info-area">
-                        <div class="food-title">${isEn ? i.en : i.am}</div>
-                        <div class="food-ing">${i.ing || ''}</div>
-                        <div class="price-tag">${i.price} ETB</div>
-                    </div>
+            const filtered = this.data.filter(i => String(i.cat).trim() === String(this.activeCat).trim() && !i.hidden);
+            
+            if (filtered.length === 0) {
+                document.getElementById('menuListing').innerHTML = `
+                <div style="text-align:center; padding: 40px 20px; color: #888; width:100%;">
+                    <p style="font-size:16px;">No items found. (በዚህ ምድብ ውስጥ ምንም ዕቃዎች አልተገኙም)</p>
                 </div>`;
-            }).join('');
+            } else {
+                document.getElementById('menuListing').innerHTML = filtered.map(i => `
+                    <div class="card" onclick="APP.openDetail('${i.id}')">
+                        <img src="${i.img || ''}" class="food-img" onerror="this.src='https://via.placeholder.com/150'">
+                        <div class="food-info-area">
+                            <div class="food-title" style="color: ${colorPrimary};">
+                                ${i.en}
+                                <span class="food-title-amh">(${i.am})</span>
+                            </div>
+                            <div class="food-ing" style="color: ${colorIng};">${i.ing || ''}</div>
+                            <div class="price-tag" style="color: ${colorPrice};">${i.price} ETB</div>
+                        </div>
+                    </div>`).join('');
+            }
             this.renderAdmin();
         },
 
-        openDetail: function(idx) {
-            const item = this.data[idx];
+        openDetail: function(id) {
+            const item = this.data.find(i => String(i.id) === String(id));
+            if(!item) return;
+            const root = getComputedStyle(document.documentElement);
+            
             document.getElementById('modalImgHD').src = item.img || '';
-            document.getElementById('modalTitle').innerText = this.lang === 'en' ? item.en : item.am;
+            document.getElementById('modalTitle').innerHTML = `${item.en}<br><span style="font-size:18px; font-weight:700; color:#444444; font-family:'Noto Sans Ethiopic';">(${item.am})</span>`;
+            document.getElementById('modalTitle').style.color = root.getPropertyValue('--brand-primary').trim();
             document.getElementById('modalIng').innerText = item.ing || '';
+            document.getElementById('modalIng').style.color = root.getPropertyValue('--ing-color').trim();
             document.getElementById('modalPrice').innerText = item.price + " ETB";
+            document.getElementById('modalPrice').style.color = root.getPropertyValue('--price-color').trim();
             document.getElementById('itemDetailModal').style.display = 'flex';
         },
         closeDetail: function() { document.getElementById('itemDetailModal').style.display = 'none'; },
@@ -252,70 +352,156 @@
         renderAdmin: function() {
             document.getElementById('adminCatList').innerHTML = this.cats.map((c, idx) => `
                 <div class="cat-row">
-                    <div class="cat-info"><span><b>${c.en}</b> / ${c.am}</span>
+                    <div class="cat-info"><span><b>${c.en}</b> (${c.am})</span>
                         <div>
-                            <button onclick="APP.prepRename('${c.id}')" style="background:#3498db; color:white; border:none; padding:8px; border-radius:6px;">Rename</button>
-                            <button onclick="APP.deleteCat('${c.id}')" style="background:#e74c3c; color:white; border:none; padding:8px; border-radius:6px;">Del</button>
+                            <button onclick="APP.prepRename('${String(c.id).trim()}')" style="background:#3498db; color:white; border:none; padding:8px; border-radius:6px; cursor:pointer;">Rename</button>
+                            <button onclick="APP.deleteCat('${String(c.id).trim()}')" style="background:#e74c3c; color:white; border:none; padding:8px; border-radius:6px; cursor:pointer;">Del</button>
                         </div>
                     </div>
-                    <input type="file" onchange="APP.updateCatImg(${idx}, this)">
+                    <input type="file" accept="image/*" onchange="APP.updateCatImg(${idx}, this)">
                 </div>`).join('');
 
             document.getElementById('adminItemBody').innerHTML = this.data.map((i, idx) => `
                 <tr style="${i.hidden ? 'opacity:0.3' : ''}">
                     <td>
-                        <input value="${i.en}" onchange="APP.data[${idx}].en=this.value" placeholder="EN Name">
-                        <input value="${i.am}" onchange="APP.data[${idx}].am=this.value" placeholder="AM Name">
-                        <input value="${i.ing || ''}" onchange="APP.data[${idx}].ing=this.value" placeholder="Ingredients" style="font-size:11px;">
+                        <input value="${i.en}" onchange="APP.data[${idx}].en=this.value" placeholder="EN Title">
+                        <input value="${i.am}" onchange="APP.data[${idx}].am=this.value" placeholder="AM Title">
+                        <input value="${i.ing || ''}" onchange="APP.data[${idx}].ing=this.value" style="font-size:11px;" placeholder="Details">
                         <select onchange="APP.data[${idx}].cat=this.value">
-                            ${this.cats.map(c => `<option value="${c.id}" ${c.id==i.cat?'selected':''}>${c.en}</option>`).join('')}
+                            ${this.cats.map(c => `<option value="${String(c.id).trim()}" ${String(c.id).trim()===String(i.cat).trim()?'selected':''}>${c.en} (${c.am})</option>`).join('')}
                         </select>
-                        <input type="file" onchange="APP.updateItemImg(${idx}, this)" style="font-size:10px; border:none;">
+                        <input type="file" accept="image/*" onchange="APP.updateItemImg(${idx}, this)" style="font-size:10px; border:none; padding:0;">
                     </td>
-                    <td><input type="text" class="price-box" value="${i.price}" onchange="APP.data[${idx}].price=this.value"></td>
-                    <td>
-                        <button onclick="APP.toggleHide(${idx})" style="background:#555; color:white; border:none; padding:5px; width:100%; margin-bottom:5px;">Hide</button>
-                        <button onclick="APP.deleteItem(${idx})" style="background:red; color:white; border:none; padding:5px; width:100%;">Del</button>
+                    <td style="width:100px;"><input type="text" class="price-box" value="${i.price}" onchange="APP.data[${idx}].price=this.value"></td>
+                    <td style="width:70px; text-align:right;">
+                        <button onclick="APP.toggleHide(${idx})" style="background:#555; color:white; border:none; padding:8px; width:100%; margin-bottom:5px; border-radius:4px; cursor:pointer;">${i.hidden?'Show':'Hide'}</button>
+                        <button onclick="APP.deleteItem(${idx})" style="background:red; color:white; border:none; padding:8px; width:100%; border-radius:4px; cursor:pointer;">Del</button>
                     </td>
                 </tr>`).join('');
-            document.getElementById('nItemCat').innerHTML = this.cats.map(c => `<option value="${c.id}">${c.en}</option>`).join('');
+            document.getElementById('nItemCat').innerHTML = this.cats.map(c => `<option value="${String(c.id).trim()}">${c.en} (${c.am})</option>`).join('');
         },
 
         verifyLogin: function() {
             const root = getComputedStyle(document.documentElement);
             const user = root.getPropertyValue('--admin-user').trim().replace(/"/g, '');
-            const pass = root.getPropertyValue('--admin-pass').trim().replace(/"/g, '');
-            if(document.getElementById('uIn').value === user && document.getElementById('pIn').value === pass){
+            const uEl = document.getElementById('uIn');
+            const pEl = document.getElementById('pIn');
+            
+            if(uEl.value === user && pEl.value === this.cloudPassword){
                 document.getElementById('adminDashboard').style.display='block';
-                document.getElementById('uIn').value = ""; document.getElementById('pIn').value = "";
+                uEl.value = "";
+                pEl.value = "";
                 this.closeModals();
-            } else { alert("Login Error"); }
+            } else { 
+                uEl.value = "";
+                pEl.value = "";
+                alert("Access Key Validation Failed!"); 
+            }
         },
 
-        setCat: function(id) { this.activeCat = id; this.render(); },
-        toggleLang: function() { this.lang = (this.lang === 'en' ? 'am' : 'en'); this.render(); },
+        updateSystemPassword: function() {
+            const newPass = document.getElementById('newPassInput').value.trim();
+            if(!newPass) {
+                alert("Password cannot be empty!");
+                return;
+            }
+            
+            const root = getComputedStyle(document.documentElement);
+            const form = document.getElementById('corsBypassForm');
+            form.action = root.getPropertyValue('--google-sheet-url').trim().replace(/"/g, '');
+            
+            document.getElementById('corsPayloadField').value = JSON.stringify({ action: "update_password", newPassword: newPass });
+            form.submit();
+            
+            alert("Password update processed! Syncing storage...");
+            this.cloudPassword = newPass;
+            document.getElementById('newPassInput').value = "";
+        },
+
+        setCat: function(id) { this.activeCat = String(id).trim(); this.render(); },
+        toggleLang: function() { },
         showLogin: function(e) { e.stopPropagation(); document.getElementById('loginOverlay').style.display='flex'; },
-        closeAdmin: function() { document.getElementById('adminDashboard').style.display='none'; },
+        
+        closeAdmin: function() { 
+            document.getElementById('adminDashboard').style.display='none';
+            document.getElementById('uIn').value = "";
+            document.getElementById('pIn').value = "";
+        },
         closeModals: function() { document.querySelectorAll('.overlay').forEach(o => o.style.display='none'); },
         openModal: function(id) { document.getElementById(id).style.display='flex'; },
-        handleImg: function(input) { const r = new FileReader(); r.onload = (e) => this.imgTmp = e.target.result; r.readAsDataURL(input.files[0]); },
-        updateCatImg: function(idx, input) { const r = new FileReader(); r.onload = (e) => { this.cats[idx].img = e.target.result; }; r.readAsDataURL(input.files[0]); },
-        updateItemImg: function(idx, input) { const r = new FileReader(); r.onload = (e) => { this.data[idx].img = e.target.result; this.renderAdmin(); }; r.readAsDataURL(input.files[0]); },
-        prepRename: function(id) { this.editId = id; const c = this.cats.find(x => x.id == id); document.getElementById('eCatEn').value=c.en; document.getElementById('eCatAm').value=c.am; this.openModal('editCatModal'); },
-        applyCatRename: function() { const c = this.cats.find(x => x.id == this.editId); if(c){ c.en=document.getElementById('eCatEn').value; c.am=document.getElementById('eCatAm').value; this.closeModals(); this.render(); } },
-        deleteCat: function(id) { if(confirm("Delete Category?")) { this.cats = this.cats.filter(c => c.id != id); this.render(); } },
-        createNewCat: function() { this.cats.push({id:document.getElementById('nCatId').value, en:document.getElementById('nCatEn').value, am:document.getElementById('nCatAm').value, img:this.imgTmp}); this.closeModals(); this.render(); },
-        createNewItem: function() { this.data.push({id:Date.now(), cat:document.getElementById('nItemCat').value, en:document.getElementById('nItemEn').value, am:document.getElementById('nItemAm').value, ing:document.getElementById('nItemIng').value, price:document.getElementById('nItemPrice').value, img:this.imgTmp, hidden:false}); this.closeModals(); this.render(); },
+        
+        handleImg: function(input) { 
+            if(input.files && input.files[0]) { 
+                const r = new FileReader(); r.onload = (e) => {
+                    const img = new Image(); img.src = e.target.result; img.onload = () => {
+                        const canvas = document.createElement('canvas'); const max_size = 400; let w = img.width, h = img.height;
+                        if (w > h) { if (w > max_size) { h *= max_size / w; w = max_size; } } else { if (h > max_size) { w *= max_size / h; h = max_size; } }
+                        canvas.width = w; canvas.height = h; canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+                        APP.imgTmp = canvas.toDataURL('image/jpeg', 0.7);
+                    };
+                }; r.readAsDataURL(input.files[0]); 
+            } 
+        },
+        updateCatImg: function(idx, input) { 
+            if(input.files && input.files[0]) { 
+                const r = new FileReader(); r.onload = (e) => { 
+                    const img = new Image(); img.src = e.target.result; img.onload = () => {
+                        const canvas = document.createElement('canvas'); let w = img.width, h = img.height;
+                        if (w > 400) { h *= 400 / w; w = 400; } canvas.width = w; canvas.height = h;
+                        canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+                        APP.cats[idx].img = canvas.toDataURL('image/jpeg', 0.7);
+                    };
+                }; r.readAsDataURL(input.files[0]); 
+            } 
+        },
+        updateItemImg: function(idx, input) { 
+            if(input.files && input.files[0]) { 
+                const r = new FileReader(); r.onload = (e) => { 
+                    const img = new Image(); img.src = e.target.result; img.onload = () => {
+                        const canvas = document.createElement('canvas'); let w = img.width, h = img.height;
+                        if (w > 400) { h *= 400 / w; w = 400; } canvas.width = w; canvas.height = h;
+                        canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+                        APP.data[idx].img = canvas.toDataURL('image/jpeg', 0.7); APP.renderAdmin();
+                    };
+                }; r.readAsDataURL(input.files[0]); 
+            } 
+        },
+        
+        prepRename: function(id) { this.editId = id; const c = this.cats.find(x => String(x.id).trim() == String(id).trim()); if(c){ document.getElementById('eCatEn').value=c.en; document.getElementById('eCatAm').value=c.am; this.openModal('editCatModal'); } },
+        applyCatRename: function() { const c = this.cats.find(x => String(x.id).trim() == String(this.editId).trim()); if(c){ c.en=document.getElementById('eCatEn').value; c.am=document.getElementById('eCatAm').value; this.closeModals(); this.render(); } },
+        deleteCat: function(id) { if(confirm("Delete Category?")) { this.cats = this.cats.filter(c => String(c.id).trim() != String(id).trim()); this.render(); } },
+        createNewCat: function() { this.cats.push({id:String(document.getElementById('nCatId').value).trim(), en:document.getElementById('nCatEn').value, am:document.getElementById('nCatAm').value, img:this.imgTmp}); this.imgTmp=''; this.closeModals(); this.render(); },
+        createNewItem: function() { this.data.push({id:"item_" + new Date().getTime(), cat:String(document.getElementById('nItemCat').value).trim(), en:document.getElementById('nItemEn').value, am:document.getElementById('nItemAm').value, ing:document.getElementById('nItemIng').value, price:document.getElementById('nItemPrice').value, img:this.imgTmp, hidden:false}); this.imgTmp=''; this.closeModals(); this.render(); },
         toggleHide: function(idx) { this.data[idx].hidden = !this.data[idx].hidden; this.render(); },
         deleteItem: function(idx) { if(confirm("Delete Item?")) { this.data.splice(idx, 1); this.render(); } },
-        saveToCloud: async function() {
+        
+        saveToCloud: function() {
+            if (!this.cats || this.cats.length === 0) {
+                alert("CRITICAL SAFETY: Sync terminated. Category entries missing from memory array container.");
+                return;
+            }
+            
             const root = getComputedStyle(document.documentElement);
-            const sheetUrl = root.getPropertyValue('--google-sheet-url').trim().replace(/"/g, '');
-            const b = document.getElementById('cloudBtn'); b.innerText = "UPDATING...";
-            try {
-                await fetch(sheetUrl, { method: 'POST', mode: 'no-cors', body: JSON.stringify({ items: this.data, cats: this.cats }) });
-                alert("Saved Successfully!"); this.init();
-            } catch(e) { alert("Error saving"); } finally { b.innerText = "💾 SYNC ALL CHANGES"; }
+            const b = document.getElementById('cloudBtn'); 
+            b.innerText = "SYNCING OVERRIDE...";
+            
+            const form = document.getElementById('corsBypassForm');
+            form.action = root.getPropertyValue('--google-sheet-url').trim().replace(/"/g, '');
+            
+            document.getElementById('corsPayloadField').value = JSON.stringify({ items: this.data, cats: this.cats });
+            form.submit();
+            
+            setTimeout(() => {
+                alert("Data changes saved successfully!");
+                b.innerText = "💾 SYNC ALL CHANGES";
+                
+                const loader = document.getElementById('pageLoader');
+                if(loader) {
+                    loader.style.opacity = '1';
+                    loader.style.display = 'flex';
+                }
+                APP.init();
+            }, 2500);
         },
         closeOnOutside: function(e) { if(e.target.className==='overlay') this.closeModals(); }
     };
